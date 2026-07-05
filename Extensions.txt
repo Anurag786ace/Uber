@@ -1,1 +1,1 @@
-Express,Dotenv,Cors
+Express,Dotenv,Cors,Bycrypt,JsonWebToken
