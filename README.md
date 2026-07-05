@@ -47,6 +47,13 @@ This document outlines the architecture and the code implemented in the project 
   4. Calls `userService.createUser` to save the user to the database.
   5. Generates a JWT token for the new user.
   6. Returns a `201 Created` HTTP response with the token and user data.
+- Contains the `loginUser` function which:
+  1. Checks for validation errors from the incoming request.
+  2. Extracts email and password from the request body.
+  3. Finds the user in the database by email and explicitly selects the hashed password.
+  4. Compares the provided password with the hashed password using the model's instance method.
+  5. Generates a JWT token if credentials are valid.
+  6. Returns a `200 OK` HTTP response with the token and user data.
 
 ## 6. Routes
 **Folder/File:** `Backend/routes/user.routes.js`
@@ -58,3 +65,8 @@ This document outlines the architecture and the code implemented in the project 
   - `fullname.firstname` and `fullname.lastname` are at least 3 characters.
   - `password` is at least 6 characters.
 - Forwards the validated request to `userController.registerUser`.
+- Contains a POST route for `/login`.
+- Incorporates request payload validation using `express-validator` to ensure that:
+  - `email` is valid.
+  - `password` is at least 6 characters.
+- Forwards the validated request to `userController.loginUser`.
