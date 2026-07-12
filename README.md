@@ -99,6 +99,9 @@ This document outlines the architecture and the code implemented in the project 
   4. Calls `captainService.createCaptain` passing all required properties including destructured vehicle details.
   5. Generates a JWT token for the new captain.
   6. Returns a `201 Created` HTTP response with the token and captain data.
+- Contains the `captainLogin` function which validates credentials, compares passwords, and sets a JWT cookie for the captain.
+- Contains the `getCaptainProfile` function which returns the authenticated captain's data populated by the auth middleware.
+- Contains the `captainLogout` function which clears the authentication cookie and blacklists the current JWT token.
 
 ## 7. Routes
 **Folder/File:** `Backend/routes/user.routes.js`, `Backend/routes/captain.routes.js`
@@ -111,3 +114,6 @@ This document outlines the architecture and the code implemented in the project 
 
 - **Captain Routes (`captain.routes.js`)**: Defines the API endpoints for the captain resource.
 - **POST `/register`**: Validates the captain registration payload (including strict checks on nested vehicle fields like `vehicleType`, `capacity`, and coordinates) using `express-validator` and forwards to `registerCaptain`.
+- **POST `/login`**: Validates the login payload and forwards to `captainLogin`.
+- **GET `/profile`**: Protected by `authMiddleware.authCaptain`, forwards to `getCaptainProfile`.
+- **GET/POST `/logout`**: Protected by `authMiddleware.authCaptain`, forwards to `captainLogout`.
